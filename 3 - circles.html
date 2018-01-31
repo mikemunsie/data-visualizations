@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>1 - Basics</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: arial;
+    }
+
+    h1 {
+      font-weight: 300;
+    }
+  </style>
+  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.min.js'></script>
+</head>
+<body>
+
+  <svg width="720" height="120"></svg>
+  
+  <script>
+    function updateCircles(data) {
+      const svg = d3.select("svg");
+
+      // Why selectAll circle even though it doesn't exist? Here’s the deal. Instead of 
+      // telling D3 how to do something, tell D3 what you want.
+
+       /*
+      Whenever this code is run, it recomputes the data join and maintains the desired correspondence between 
+      elements and data. If the new dataset is smaller than the old one, the surplus elements end up in the 
+      exit selection and get removed. If the new dataset is larger, the surplus data ends up in the enter 
+      selection and new nodes are added. If the new dataset is exactly the same size, then all the elements 
+      are simply updated with new positions, and no elements are added or removed.
+
+      https://bost.ocks.org/mike/join/
+      */
+
+      console.log(data);
+      const circles = svg.selectAll("circle")
+        .data(data);
+      
+      circles
+        .exit()
+        .transition()
+        .attr('r', 0) // apply an exit transition
+        .remove();
+      
+      circles.enter()
+        .append('circle')
+        .attr("cy", 60)
+        .attr("cx", (d, i) => i * 100 + 30)
+        .transition() // apply a show transition
+        .attr("r", (d, i) => d)
+    }
+
+    setInterval(() => {
+      const length = Math.floor(Math.random() * 4) + 1;
+      const data = [];
+      for (let i = 0; i < length; i++) {
+        data.push(Math.floor(Math.random() * 30) + 10);
+      }
+      updateCircles(data);
+    }, 500);
+
+
+  </script>
+</body>
+</html>
