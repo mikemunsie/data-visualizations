@@ -5,6 +5,7 @@
       <span>Goto:</span>
       <select @change="updatePage" v-model="selected">
         <option value="/">Home</option>
+        <option value="/barchart">Bar Chart</option>
         <option value="/forcegraph">Force Graph</option>
       </select>
     </div>

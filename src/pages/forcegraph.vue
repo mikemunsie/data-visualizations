@@ -59,7 +59,7 @@ function draw() {
   const simulation = d3.forceSimulation()
     .force('link', d3.forceLink()
       .id((d) => d.id)
-      .distance(100)
+      .distance(200)
     )
     .force('charge', d3.forceManyBody())
     .force('center', d3.forceCenter(width / 2, height / 2))
